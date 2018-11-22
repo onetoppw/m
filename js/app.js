@@ -53,7 +53,7 @@
 	}
 	owner.goHome = function(tab) {
 		tab = tab || "games";
-		owner.setSession('activeTab',tag);
+		owner.setSession('activeTab',tab);
 		owner.go('index.html');
 	}
 
@@ -90,7 +90,7 @@
 				//异常处理；
 				//callback('');
 				console.log(type);
-				return goHome();
+				return owner.goHome();
 			}
 		});
 	}
