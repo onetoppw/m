@@ -1,0 +1,18 @@
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.app-wallet-block{
+	margin-top: 5px;
+	padding:20px;
+	background-color: #636A73;
+}
+.app-wallet-block h1{
+	color: #eee;
+}
+.app-wallet-block h4{
+	color: #eaeafa;
+}
