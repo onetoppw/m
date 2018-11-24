@@ -3,7 +3,7 @@
  **/
 (function($, owner) {
 
-	//var api_host = "http://127.0.0.1/api";
+	//var api_host = "http://localhost/api";
 	//var api_host = "http://api.onetop.pw/api";
 	var api_host = "http://43.249.206.212/api";
 
@@ -143,6 +143,8 @@
 				'Content-Type': 'application/json'
 			},
 			success: function(res) {
+				console.log(res);
+				//return;
 				if (res.code == 401) {
 					owner.setState(false);
 					return owner.goLogin();
@@ -225,7 +227,7 @@
 	 */
 	owner.logout = function() {
 
-		owner.post('/logout', {}, false, function(data) {
+		owner.post('/logout', {}, true, function(data) {
 			owner.setState(false);
 			$.toast('退出应用');
 			owner.goHome();
