@@ -22,7 +22,7 @@
 		<header class="mui-bar mui-bar-nav">
 
 			<h1 id="title" class="mui-title">游戏</h1>
-			<button id="accountBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" ><small id="account">游客</small></button>
+			<button id="accountBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right"><small id="account">游客</small></button>
 		</header>
 		<nav id="bottom-tab" class="mui-bar mui-bar-tab">
 			<a id="tab-games" class="mui-tab-item" href="#games">
@@ -39,7 +39,7 @@
 			</a>
 		</nav>
 		<div class="mui-content">
-			<div id="games" class="mui-control-content">
+			<div id="games" class="mui-control-content" style="margin-top: 5px;">
 				<div id="slider" class="mui-slider">
 					<div class="mui-slider-group mui-slider-loop">
 						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
@@ -70,7 +70,7 @@
 						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 						<div class="mui-slider-item mui-slider-item-duplicate">
 							<a href="#">
-								<img src="images/e03.png">
+								<img src="images/e01.png">
 							</a>
 						</div>
 					</div>
@@ -78,13 +78,12 @@
 						<div class="mui-indicator mui-active"></div>
 						<div class="mui-indicator"></div>
 						<div class="mui-indicator"></div>
-						<div class="mui-indicator"></div>
 					</div>
 				</div>
 
-				<ul class="mui-table-view mui-table-view-chevron ">
-					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
+				<ul id="game-list" class="mui-table-view mui-table-view-chevron ">
+					<li id="hj" class="mui-table-view-cell mui-media">
+						<a class="mui-navigate-right" href="javascript:void(0);">
 							<img class="mui-media-object mui-pull-left" src="images/01.png">
 							<div class="mui-media-body">
 								皇家国际
@@ -92,8 +91,8 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
+					<li id="wnsr" class="mui-table-view-cell mui-media">
+						<a class="mui-navigate-right" href="javascript:void(0);">
 							<img class="mui-media-object mui-pull-left" src="images/02.png">
 							<div class="mui-media-body">
 								威尼斯人
@@ -101,8 +100,8 @@
 							</div>
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
+					<li id="jxb" class="mui-table-view-cell mui-media">
+						<a class="mui-navigate-right" href="javascript:void(0);">
 							<img class="mui-media-object mui-pull-left" src="images/03.png">
 							<div class="mui-media-body">
 								机械版百乐
@@ -111,7 +110,7 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
+						<a class="mui-navigate-right" href="javascript:void(0);">
 							<img class="mui-media-object mui-pull-left" src="images/04.png">
 							<div class="mui-media-body">
 								机械版龙虎
@@ -120,7 +119,7 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
+						<a class="mui-navigate-right" href="javascript:void(0);">
 							<img class="mui-media-object mui-pull-left" src="images/05.png">
 							<div class="mui-media-body">
 								机械版单挑
@@ -129,7 +128,7 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
+						<a class="mui-navigate-right" href="javascript:void(0);">
 							<img class="mui-media-object mui-pull-left" src="images/06.png">
 							<div class="mui-media-body">
 								彩票
@@ -253,24 +252,50 @@
 	<script>
 		//mui.trigger(document.getElementById('tab-wallet'),'tap');
 		(function($, doc) {
-			$.init();
-			var slider = $("#slider");
-			slider.slider({
-				interval: 5000
+			$.init({
+				swipeBack: true,
 			});
+
+			var firstRun = 0;
+			if (firstRun == 1) {
+				$('#slider').slider({
+					interval: 4000
+				});
+				firstRun++;
+			} else {
+				$('#slider').slider().refresh();
+			}
+
 			var activeTab = app.getSession('activeTab') || 'games';
- 			
-			doc.getElementById(activeTab).className +=' mui-active';
-			doc.getElementById('tab-' + activeTab).className +=' mui-active';
-						
-			$('#bottom-tab').on('tap','.mui-tab-item',function(event){
+
+			doc.getElementById(activeTab).className += ' mui-active';
+			doc.getElementById('tab-' + activeTab).className += ' mui-active';
+
+			$('#bottom-tab').on('tap', '.mui-tab-item', function(event) {
 				var id = this.getAttribute("id");
 				activeTab = id.substr(4);
-				app.setSession('activeTab',activeTab);
+				app.setSession('activeTab', activeTab);
 			});
-									
-			
-					
+
+			$('#game-list').on('tap', '.mui-media', function(event) {
+				var id = this.getAttribute("id");
+				switch (id) {
+					case "hj":
+						app.gameLoginInfo('hj', window.location.href, function(data) {
+							if (data.code == 0) {
+								app.go(data.data);
+							} else {
+								$.alert('游戏服务器访问失败，请稍后重试！');
+							}
+						});
+						break;
+					default:
+						$.toast('即将推出，敬请期待！');
+						break;
+				}
+			});
+
+
 			var loginBtn = doc.getElementById('login');
 			var regBtn = doc.getElementById('reg');
 			var logoutBtn = doc.getElementById('logout');
@@ -283,29 +308,28 @@
 			logoutBtn.addEventListener('tap', function(event) {
 				app.logout();
 			});
-			
-			
+
+
 			updateUnserInfo();
-			
-			function updateUnserInfo(){
+
+			function updateUnserInfo() {
 				var state = app.getState();
 				console.log(state);
 				var account = doc.getElementById('account');
-				if (state.account){
 
+				if (state.account) {
 					account.innerHTML = state.account;
-					loginBtn.style.display ='none';
-					regBtn.style.display ='none';
-					logoutBtn.style.display ='';
-				}else{
+					loginBtn.style.display = 'none';
+					regBtn.style.display = 'none';
+					logoutBtn.style.display = '';
+				} else {
 					account.innerHTML = '游客';
-					loginBtn.style.display ='';
-					regBtn.style.display ='';
-					logoutBtn.style.display ='none';
+					loginBtn.style.display = '';
+					regBtn.style.display = '';
+					logoutBtn.style.display = 'none';
 				}
 			}
-			
+
 		}(mui, document));
-		
 	</script>
 </html>
