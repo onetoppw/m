@@ -5,7 +5,8 @@
 	/**
 	 * 用户登录
 	 **/
-	var api_host = "http://localhost/api";
+	var api_host = "http://api.onetop.pw/api";
+//	var api_host = "http://192.168.0.112/api";
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
 		loginInfo = loginInfo || {};
@@ -19,15 +20,17 @@
 			return callback('请输入密码');
 		}
 
-		owner.post('/login', loginInfo, false, function(data) {
+		owner.post(api_host+'/login', loginInfo, false, function(data) {
+			console.log(data);
 			if (!data || !data.data) return callback('登录失败');
 			if (data.code != 0) return callback(data.data);
+			
 			$.toast('登录成功');
 			data.username = loginInfo.username;
 			return owner.createState(data, callback);
 		});
 	};
-	
+
 
 	owner.logout = function() {
 
@@ -91,7 +94,7 @@
 				//异常处理；
 				//callback('');
 				console.log(type);
-				return owner.goHome();
+				//return owner.goHome();
 			}
 		});
 	}

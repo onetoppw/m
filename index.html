@@ -289,8 +289,10 @@
 			
 			function updateUnserInfo(){
 				var state = app.getState();
+				console.log(state);
 				var account = doc.getElementById('account');
 				if (state.account){
+
 					account.innerHTML = state.account;
 					loginBtn.style.display ='none';
 					regBtn.style.display ='none';

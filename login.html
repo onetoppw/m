@@ -127,14 +127,15 @@
 						password: passwordBox.value
 					};
 					app.login(loginInfo, function(err) {
+						console.log(loginInfo)
 						if (err) {
 							mui.alert(err);
 							return;
 						}
-						$.openWindow({
-							url: 'index.html',
-							id: 'game'
-						});
+//						$.openWindow({
+//							url: 'index.html',
+//							id: 'game'
+//						});
 					});
 				});
 				$.enterfocus('#login-form input', function() {
