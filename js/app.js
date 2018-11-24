@@ -5,7 +5,9 @@
 	/**
 	 * 用户登录
 	 **/
-	var api_host = "http://localhost/api";
+	//var api_host = "http://127.0.0.1/api";
+	//var api_host = "http://api.onetop.pw/api";
+	var api_host = "http://43.249.206.212/api";
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
 		loginInfo = loginInfo || {};
@@ -89,7 +91,9 @@
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
 				//callback('');
+				console.log(xhr);
 				console.log(type);
+				$.toast('请求发生错误');
 				return owner.goHome();
 			}
 		});
